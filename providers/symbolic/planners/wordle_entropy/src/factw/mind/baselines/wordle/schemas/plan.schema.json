@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "properties": {
+    "actions": {
+      "type": "array",
+      "maxItems": 1,
+      "items": {
+        "type": "object",
+        "properties": {"guess": {"type": "string", "pattern": "^[A-Z]{5}$"}},
+        "required": ["guess"],
+        "additionalProperties": false
+      }
+    },
+    "candidates": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z]{5}$"}, "minItems": 1, "uniqueItems": true},
+    "predictions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "feedback": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 2}, "minItems": 5, "maxItems": 5},
+          "candidates": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z]{5}$"}, "minItems": 1, "uniqueItems": true},
+          "count": {"type": "integer", "minimum": 1},
+          "total": {"type": "integer", "minimum": 1}
+        },
+        "required": ["feedback", "candidates", "count", "total"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["actions", "candidates", "predictions"],
+  "additionalProperties": false
+}

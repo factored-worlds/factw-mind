@@ -1,0 +1,19 @@
+{
+  "$id": "wordle_public_history",
+  "type": "object",
+  "properties": {
+    "guesses": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z]{5}$"}},
+    "feedbacks": {
+      "type": "array",
+      "items": {"type": "array", "items": {"type": "integer", "minimum": 0, "maximum": 2}, "minItems": 5, "maxItems": 5}
+    },
+    "attempts": {"type": "integer", "minimum": 0},
+    "max_guesses": {"type": "integer", "minimum": 1},
+    "max_attempts": {"type": "integer", "minimum": 1},
+    "won": {"type": "boolean"},
+    "terminated": {"type": "boolean"},
+    "truncated": {"type": "boolean"}
+  },
+  "required": ["guesses", "feedbacks", "attempts", "max_guesses", "max_attempts", "won", "terminated", "truncated"],
+  "additionalProperties": false
+}

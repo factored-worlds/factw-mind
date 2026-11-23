@@ -1,0 +1,59 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "factw-mind"
+version = "0.1.0+helloworld"
+description = "Framework and reusable methods for building a factored mind"
+requires-python = ">=3.14"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+
+[project.optional-dependencies]
+wordle = ["factored-worlds-wordle==0.1.0rc33"]
+smsl = ["pysmsl==0.2.0rc6"]
+
+[project.scripts]
+fm-wordle-baseline = "factw.mind.baselines.wordle.cli:main"
+
+[dependency-groups]
+test = ["pytest>=8,<10"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+only-include = [
+    "core/src/factw/mind/representations",
+    "core/src/factw/mind/primitives",
+    "core/src/factw/mind/observations",
+    "core/src/factw/mind/baselines/__init__.py",
+    "providers/symbolic/planners/bounded_search/src/factw/mind/planning",
+    "providers/symbolic/planners/wordle_entropy/src/factw/mind/baselines/wordle",
+]
+sources = [
+    "core/src",
+    "providers/symbolic/planners/bounded_search/src",
+    "providers/symbolic/planners/wordle_entropy/src",
+]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/core/src/factw/mind/representations/*.py",
+    "/core/src/factw/mind/primitives/*.py",
+    "/core/src/factw/mind/observations/*.py",
+    "/core/src/factw/mind/baselines/__init__.py",
+    "/providers/symbolic/planners/bounded_search/src/factw/mind/planning/*.py",
+    "/providers/symbolic/planners/wordle_entropy/src/factw/mind/baselines/wordle/*.py",
+    "/providers/symbolic/planners/wordle_entropy/src/factw/mind/baselines/wordle/schemas/*.json",
+    "/tests/test_representations.py",
+    "/tests/test_primitive_types.py",
+    "/tests/test_primitive_execution.py",
+    "/tests/test_patch_statistics.py",
+    "/tests/test_bounded_search.py",
+    "/tests/test_wordle_baselines.py",
+    "/tests/test_wordle_minimax.py",
+    "/pyproject.toml",
+    "/LICENSE",
+]

@@ -1,0 +1,9 @@
+smsl "0.2";
+system HanoiAstarProvider {
+  component planner: "symbolic-planner" {
+    block next_move: symbolic.plan {
+      provider "hanoi_astar.planner";
+      config { max_states = 27; max_depth = 7; };
+    }
+  }
+}

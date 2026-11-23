@@ -1,0 +1,12 @@
+smsl "0.2";
+system WordleExactProvider {
+  component planner: "symbolic-planner" {
+    block next_guess: symbolic.plan {
+      provider "wordle.exact_information_policy";
+      config {
+        answers = ["APPLE", "ALLEY", "CRANE", "GRAPE", "LEMON"];
+        allowed_guesses = ["APPLE", "ALLEY", "CRANE", "GRAPE", "LEMON"];
+      };
+    }
+  }
+}

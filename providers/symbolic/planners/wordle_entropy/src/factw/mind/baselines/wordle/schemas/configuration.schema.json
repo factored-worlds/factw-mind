@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "properties": {
+    "answers": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z]{5}$"}, "minItems": 1, "uniqueItems": true},
+    "allowed_guesses": {"type": "array", "items": {"type": "string", "pattern": "^[A-Z]{5}$"}, "minItems": 1, "uniqueItems": true}
+  },
+  "required": ["answers", "allowed_guesses"],
+  "additionalProperties": false
+}

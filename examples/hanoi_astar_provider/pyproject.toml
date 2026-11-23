@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.27,<2", "factw-env[extension-build]==0.1.0rc138"]
+build-backend = "hatchling.build"
+
+[project]
+name = "factored-worlds-mind-hanoi-astar-provider"
+version = "0.1.0+helloworld"
+description = "An independently implemented bounded A-star Hanoi planning component"
+requires-python = ">=3.14"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = ["factored-worlds-mind-hanoi-provider==0.1.0+helloworld"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src/factw/mind/examples/hanoi_astar_provider"]
+sources = ["src"]
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "hatch_build.py"
+manifests = ["extension.toml"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src/factw/mind/examples/hanoi_astar_provider",
+    "/tests/test_provider.py",
+    "/pyproject.toml",
+    "/extension.toml",
+    "/hatch_build.py",
+    "/LICENSE",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

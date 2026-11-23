@@ -1,0 +1,6 @@
+{
+  "type": "object",
+  "properties": {"public": {"$ref": "wordle_public_history"}},
+  "required": ["public"],
+  "additionalProperties": false
+}

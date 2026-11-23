@@ -1,0 +1,6 @@
+{
+  "type": "object",
+  "properties": {"won": {"type": "boolean", "const": true}},
+  "required": ["won"],
+  "additionalProperties": false
+}

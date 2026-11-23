@@ -1,0 +1,39 @@
+[build-system]
+requires = ["hatchling>=1.27,<2", "factw-env[extension-build]==0.1.0rc138"]
+build-backend = "hatchling.build"
+
+[project]
+name = "factored-worlds-mind-wordle-exact-provider"
+version = "0.1.0+helloworld"
+description = "Exact Wordle belief and information policy through State Language"
+requires-python = ">=3.14"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+dependencies = ["pysmsl==0.2.0rc6", "factw-mind==0.1.0+helloworld"]
+
+[dependency-groups]
+test = ["pytest>=8,<10"]
+
+[tool.hatch.build.targets.wheel]
+only-include = ["src/factw/mind/examples/wordle_provider"]
+sources = ["src"]
+
+[tool.hatch.build.targets.wheel.hooks.custom]
+path = "hatch_build.py"
+manifests = ["extension.toml", "replacement_extension.toml", "minimax_extension.toml"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/src/factw/mind/examples/wordle_provider",
+    "/tests/test_provider.py",
+    "/tests/test_smsl_wordle_provider.py",
+    "/pyproject.toml",
+    "/extension.toml",
+    "/replacement_extension.toml",
+    "/minimax_extension.toml",
+    "/hatch_build.py",
+    "/LICENSE",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

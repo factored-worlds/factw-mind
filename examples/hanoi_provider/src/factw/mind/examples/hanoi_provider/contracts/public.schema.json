@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "pegs": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2
+      },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "goal": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "const": [
+        2,
+        2,
+        2
+      ]
+    },
+    "steps": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "terminated": {
+      "type": "boolean"
+    },
+    "truncated": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "pegs",
+    "goal",
+    "steps",
+    "terminated",
+    "truncated"
+  ],
+  "additionalProperties": false
+}

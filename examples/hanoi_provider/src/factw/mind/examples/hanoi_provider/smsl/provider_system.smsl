@@ -1,0 +1,9 @@
+smsl "0.2";
+system HanoiProvider {
+  component planner: "symbolic-planner" {
+    block next_move: symbolic.plan {
+      provider "hanoi_tutorial.planner";
+      config { max_states = 27; max_depth = 7; };
+    }
+  }
+}

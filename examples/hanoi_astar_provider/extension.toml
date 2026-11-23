@@ -1,0 +1,106 @@
+schema = "factored_worlds.extension/1"
+kind = "provider"
+id = "hanoi_astar.planner"
+extension_revision = 1
+
+[distribution]
+name = "factored-worlds-mind-hanoi-astar-provider"
+version = "0.1.0+helloworld"
+
+[resources.configuration]
+distribution = "factored-worlds-mind-hanoi-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.hanoi_provider"
+path = "contracts/configuration.schema.json"
+sha256 = "3354b703a24386755b8af4baf32c5e196d5f74a1386e4989690d9ab35e714672"
+format = "json"
+purpose = "configuration_schema"
+
+[resources.public]
+distribution = "factored-worlds-mind-hanoi-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.hanoi_provider"
+path = "contracts/public.schema.json"
+sha256 = "ac21f957feac3c2bfe4ec43f95d582e5751180dd15c7aedffe542139a7092d45"
+format = "json"
+purpose = "payload_schema"
+
+[resources.knowledge]
+distribution = "factored-worlds-mind-hanoi-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.hanoi_provider"
+path = "contracts/knowledge.schema.json"
+sha256 = "3b68c437b66d9bd819c66ef4e6f5e3b7e64468da6cbf986e583f41c3ce0c24bd"
+format = "json"
+purpose = "payload_schema"
+
+[resources.goal]
+distribution = "factored-worlds-mind-hanoi-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.hanoi_provider"
+path = "contracts/goal.schema.json"
+sha256 = "db765415462102d60c91dfa33d5e56860c9eca889ac33e8e6f8deaaaee2cd23a"
+format = "json"
+purpose = "payload_schema"
+
+[resources.plan]
+distribution = "factored-worlds-mind-hanoi-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.hanoi_provider"
+path = "contracts/plan.schema.json"
+sha256 = "672b3f1aa80023e63ccb0fadc831445eace87429e5b78a6a56519e56bf9e9180"
+format = "json"
+purpose = "payload_schema"
+
+[resources.provider_system]
+distribution = "factored-worlds-mind-hanoi-astar-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.hanoi_astar_provider"
+path = "smsl/provider_system.smsl"
+sha256 = "2ae086eb748b155378abf3ed914b020aad854bffc4c5a05cc93d89f088590692"
+format = "smsl"
+purpose = "system"
+
+[provider]
+roles = [
+    "symbolic-planner",
+]
+registration = "factw.mind.examples.hanoi_astar_provider.registration:bind_services"
+config_schema = "configuration"
+
+[[provider.contracts]]
+id = "symbolic.plan"
+
+[provider.contracts.profiles.inputs]
+knowledge = "knowledge"
+goal = "goal"
+
+[provider.contracts.profiles.outputs]
+plan = "plan"
+
+[provider.metadata]
+title = "Hanoi A-star next-move planner"
+description = "Bounded heap A-star over granted public state and legal disk transitions"
+persistence = "stateless"
+
+[provider.implementation]
+algorithm = "bounded_hanoi_astar_search"
+backend = "python"
+
+[provider.information]
+requires_views = [
+    "player_hanoi",
+]
+requires_operations = []
+requires_fields = [
+    { view = "player_hanoi", pointer = "/pegs" },
+    { view = "player_hanoi", pointer = "/goal" },
+    { view = "player_hanoi", pointer = "/steps" },
+    { view = "player_hanoi", pointer = "/terminated" },
+    { view = "player_hanoi", pointer = "/truncated" },
+]
+
+[provider.lifecycle]
+invoke = "sync"
+cancel = "unsupported"
+close = "sync"

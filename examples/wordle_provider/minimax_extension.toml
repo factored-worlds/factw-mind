@@ -1,0 +1,104 @@
+schema = "factored_worlds.extension/1"
+kind = "provider"
+id = "wordle.minimax_policy"
+extension_revision = 2
+
+[distribution]
+name = "factored-worlds-mind-wordle-exact-provider"
+version = "0.1.0+helloworld"
+
+[resources.configuration]
+distribution = "factw-mind"
+version = "0.1.0+helloworld"
+package = "factw.mind"
+path = "baselines/wordle/schemas/configuration.schema.json"
+sha256 = "9c12147f8ca95ec130d0f36f4b8804bb0c52e45903fcce95f11beada24e57175"
+format = "json"
+purpose = "configuration_schema"
+
+[resources.inputs_knowledge]
+distribution = "factw-mind"
+version = "0.1.0+helloworld"
+package = "factw.mind"
+path = "baselines/wordle/schemas/knowledge.schema.json"
+sha256 = "f0146877e343578153e46215579a64267eeb39ba6c18e2033664a6e5db53e578"
+format = "json"
+purpose = "payload_schema"
+
+[resources.inputs_goal]
+distribution = "factw-mind"
+version = "0.1.0+helloworld"
+package = "factw.mind"
+path = "baselines/wordle/schemas/goal.schema.json"
+sha256 = "caf8501fb3bfa06fa2cfc87e67701395ae124ea28acf7bc657126696808fb297"
+format = "json"
+purpose = "payload_schema"
+
+[resources.outputs_plan]
+distribution = "factw-mind"
+version = "0.1.0+helloworld"
+package = "factw.mind"
+path = "baselines/wordle/schemas/plan.schema.json"
+sha256 = "64438bb80ee90e5c604c47d2ab1dffff902c334d689c6750efced6a17b793655"
+format = "json"
+purpose = "payload_schema"
+
+[resources.provider_system]
+distribution = "factored-worlds-mind-wordle-exact-provider"
+version = "0.1.0+helloworld"
+package = "factw.mind.examples.wordle_provider"
+path = "smsl/provider_system.smsl"
+sha256 = "30e78f34843ee44bcecd381f2b8c6f72e9a7c8e6b6896b5e2e1dba9aaeb67dd3"
+format = "smsl"
+purpose = "system"
+
+[resources.wordle_public_history]
+distribution = "factw-mind"
+version = "0.1.0+helloworld"
+package = "factw.mind"
+path = "baselines/wordle/schemas/public_history.schema.json"
+sha256 = "8376299d21a949b4d714ddf5aaee10be2c0b7a33a47c371fc4359078ca5212ba"
+format = "json"
+purpose = "payload_schema"
+
+[provider]
+roles = [
+    "symbolic-planner",
+]
+registration = "factw.mind.examples.wordle_provider.minimax:bind_services"
+config_schema = "configuration"
+
+[[provider.contracts]]
+id = "symbolic.plan"
+
+[provider.contracts.profiles.inputs]
+knowledge = "inputs_knowledge"
+goal = "inputs_goal"
+
+[provider.contracts.profiles.outputs]
+plan = "outputs_plan"
+
+[provider.metadata]
+title = "wordle.minimax_policy"
+description = "Minimize the largest feedback partition with lexical ties; finish a known answer directly"
+persistence = "stateless"
+
+[provider.metadata.config]
+
+[provider.implementation]
+algorithm = "minimax_wordle_policy"
+backend = "python"
+
+[provider.information]
+requires_views = [
+    "player_wordle",
+]
+requires_operations = []
+requires_fields = [
+    { view = "player_wordle", pointer = "/public" },
+]
+
+[provider.lifecycle]
+invoke = "sync"
+cancel = "unsupported"
+close = "sync"
